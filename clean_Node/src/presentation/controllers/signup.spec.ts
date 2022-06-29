@@ -1,5 +1,6 @@
 import { InvalidParamError } from "../errors/invalidParamError";
 import { MissingParamError } from "../errors/missing-param-error";
+import { ServerError } from "../errors/server-error";
 import { EmailValidator } from "../protocols/email-validator";
 import { SignUpController } from "./signUp";
 
@@ -10,7 +11,7 @@ interface SutTypes {
 
 const makeSut = (): SutTypes => {
   class EmailValidatorStub implements EmailValidator {
-    isValid (email: string): boolean {
+    isValid(email: string): boolean {
       return true
     }
   }
@@ -86,7 +87,7 @@ describe('Sign Up Controller', () => {
     const { sut, emailValidatorStub } = makeSut();
 
     jest.spyOn(emailValidatorStub, 'isValid').mockReturnValueOnce(false);
-    
+
     const httpRequest = {
       body: {
         name: 'any_name',
@@ -103,8 +104,8 @@ describe('Sign Up Controller', () => {
   it('Should call EmailValidator with correct email', () => {
     const { sut, emailValidatorStub } = makeSut();
 
-    const isValidSpy =  jest.spyOn(emailValidatorStub, 'isValid');
-    
+    const isValidSpy = jest.spyOn(emailValidatorStub, 'isValid');
+
     const httpRequest = {
       body: {
         name: 'any_name',
@@ -115,6 +116,32 @@ describe('Sign Up Controller', () => {
     }
     sut.handle(httpRequest);
     expect(isValidSpy).toHaveBeenCalledWith('any_email@mail.com');
+  });
+
+  it('Should return 500 if EmailValidator throws', () => {
+    class EmailValidatorStub implements EmailValidator {
+      isValid(email: string): boolean {
+        throw new Error();
+
+      }
+    }
+
+    const emailValidatorStub = new EmailValidatorStub()
+    const sut = new SignUpController(emailValidatorStub);
+
+    jest.spyOn(emailValidatorStub, 'isValid');
+
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'any_email@mail.com',
+        password: 'passphrase',
+        passwordConfirmation: 'passphrase'
+      }
+    }
+    const httpResponse = sut.handle(httpRequest);
+    expect(httpResponse?.statusCode).toBe(500);
+    expect(httpResponse?.body).toEqual(new ServerError());
   });
 
 });
