@@ -6,27 +6,31 @@ interface SutTypes {
   encrypterStub: Encrypter
 }
 
-const  makeSut = (): SutTypes => {
-  class EncrypterStub {
-      encrypt (value: string): Promise<string> {
-        return new Promise(resolve => resolve('hashed_passphrase'))
-      }
+const makeEncrypter = (): Encrypter => {
+  class EncrypterStub implements Encrypter {
+    async encrypt(value: string): Promise<string> {
+      return new Promise(resolve => resolve('hashed_passphrase'))
     }
-    const encrypterStub = new EncrypterStub()
-    const sut = new DbAddAccount(encrypterStub)
-    return {
-      sut,
-      encrypterStub
-    }
+  }
+  return new EncrypterStub();
+}
+
+const makeSut = (): SutTypes => {
+  const encrypterStub = makeEncrypter()
+  const sut = new DbAddAccount(encrypterStub)
+  return {
+    sut,
+    encrypterStub
+  }
 }
 
 describe('DbAddAccount Usecase', () => {
   it('Should call Encrypter with correct password', async () => {
-    const {sut, encrypterStub} = makeSut();
+    const { sut, encrypterStub } = makeSut();
     const encryptSpy = jest.spyOn(encrypterStub, 'encrypt');
     const accountData = {
       name: 'valid_name',
-      email: 'valid_email@mail.com', 
+      email: 'valid_email@mail.com',
       password: 'valid_passphrase'
     }
     await sut.add(accountData);
