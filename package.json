@@ -7,7 +7,7 @@
     "test": "jest --passWithNoTests --silent --runInBand --no-cache",
     "test:unit": "npm test -- -c",
     "test:ci": "npm test -- --coverage",
-    "dev": "nodemon --watch index.ts --exec 'ts-node index.ts' -e ts"
+    "dev": "nodemon --watch src/main/server.ts --exec ts-node src/main/server.ts -e ts"
   },
   "keywords": [],
   "author": "",
@@ -25,15 +25,13 @@
     "jest": "^28.1.1",
     "moongose": "^1.0.0",
     "nodemon": "^2.0.18",
-    "sequelize-cli": "^6.4.1",
     "ts-jest": "^28.0.5",
     "ts-node": "^10.8.1",
     "typescript": "^4.7.4"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
-    "mysql2": "^2.3.3",
-    "sequelize": "^6.21.0",
+    "mongodb": "^4.7.0",
     "validator": "^13.7.0"
   }
 }
