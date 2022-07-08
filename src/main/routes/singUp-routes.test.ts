@@ -16,10 +16,6 @@ describe('SingUp Routes', () => {
     await accountCollection.deleteMany({})
   })
 
-  // const makeSut = (): AccountMongoRepository => {
-  //   return new AccountMongoRepository()
-  // }
-
   it('Should return an account on success', async () => {
     await request(app)
       .post('/api/singUp')
