@@ -3,17 +3,16 @@ import { BcryptAdapter } from "../../infra/criptography/bcrypt-adapter";
 import { AccountMongoRepository } from "../../infra/db/mongodb/account-repository/account";
 import { LogMongoRepository } from "../../infra/db/mongodb/log-repository/log";
 import { SignUpController } from "../../presentation/controllers/signup/signUp";
-import { ValidationComposite } from "../../presentation/helpers/validators/validation-composite";
 import { Controller } from "../../presentation/protocols";
 import { LogControllerDecorator } from "../decorators/log";
+import { makeSingUpValidation } from "./signUp-validation";
 
 export const makeSingUpController = (): Controller => {
   const salt = 12
   const accountMongoRepository = new AccountMongoRepository()
   const bcryptAdapter = new BcryptAdapter(salt)
   const dbAddAccount = new DbAddAccount(bcryptAdapter, accountMongoRepository)
-  const validationComposite = new ValidationComposite([])
-  const signUpController = new SignUpController(dbAddAccount, validationComposite)
+  const signUpController = new SignUpController(dbAddAccount, makeSingUpValidation())
   const logMongoRepository = new LogMongoRepository()
   return new LogControllerDecorator(signUpController, logMongoRepository)
 }
