@@ -47,4 +47,3 @@ describe('Validation Composite', () => {
     expect(error).toBeFalsy()
   })
 })
-
