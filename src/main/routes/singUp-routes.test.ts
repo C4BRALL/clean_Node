@@ -18,7 +18,7 @@ describe('SignUp Routes', () => {
 
   it('Should return an account on success', async () => {
     await request(app)
-      .post('/api/singUp')
+      .post('/api/signup')
       .send({
         name: 'any_name',
         email: 'any_email@mail.com',
