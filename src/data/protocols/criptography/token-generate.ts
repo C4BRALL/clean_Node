@@ -1,3 +1,3 @@
-export interface TokenGenerate {
-  generate (id: string): Promise<string>
+export interface Encrypter {
+  encrypt (id: string): Promise<string>
 }
