@@ -1,6 +1,6 @@
-import { EmailValidator, AddAccount, AddAccountModel, AccountModel, HttpRequest, Validation } from "./signup-protocols"
+import { EmailValidator, AddAccount, AddAccountModel, AccountModel, HttpRequest, Validation } from "./signup-controller-protocols"
 import { MissingParamError, ServerError } from '../../errors'
-import { SignUpController } from "./signUp"
+import { SignUpController } from "./signUp-controller"
 import { badRequest, ok, serverError } from "../../helpers/http/http-helper"
 
 const makeEmailValidator = (): EmailValidator => {
