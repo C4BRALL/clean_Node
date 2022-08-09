@@ -2,9 +2,7 @@ import { Encrypter } from "../../../data/protocols/criptography/encrypter";
 import jwt from 'jsonwebtoken';
 
 export class JwtAdapter implements Encrypter {
-  private readonly secretKey: string
-
-  constructor(secretKey: string) {
+  constructor(private readonly secretKey: string) {
     this.secretKey = secretKey
   }
 

@@ -2,16 +2,11 @@ import { Authentication, UpdateAccessTokenRepository, LoadAccountByEmailReposito
 
 
 export class DbAuthentication implements Authentication {
-  private readonly loadAccountByEmailRepository: LoadAccountByEmailRepository
-  private readonly hashCompare: HashCompare
-  private readonly encrypter: Encrypter
-  private readonly updateAccessTokenRepository: UpdateAccessTokenRepository
-
   constructor(
-    loadAccountByEmailRepository: LoadAccountByEmailRepository,
-    hashCompare: HashCompare,
-    encrypter: Encrypter,
-    updateAccessTokenRepository: UpdateAccessTokenRepository
+    private readonly loadAccountByEmailRepository: LoadAccountByEmailRepository,
+    private readonly hashCompare: HashCompare,
+    private readonly encrypter: Encrypter,
+    private readonly updateAccessTokenRepository: UpdateAccessTokenRepository
   ) {
     this.loadAccountByEmailRepository = loadAccountByEmailRepository
     this.hashCompare = hashCompare
