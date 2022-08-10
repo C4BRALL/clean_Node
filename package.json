@@ -1,6 +1,6 @@
 {
   "name": "clean",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,7 @@
     "dev": "nodemon --watch src/main/server.ts --exec ts-node src/main/server.ts -e ts"
   },
   "keywords": [],
-  "author": "",
+  "author": "C4BRALL",
   "license": "ISC",
   "devDependencies": {
     "@faker-js/faker": "^7.4.0",
